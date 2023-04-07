@@ -15,6 +15,7 @@ class GameScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final gameProvider = Provider.of<Game>(context);
     gameProvider.createPlayersModels();
+    print('sex');
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
