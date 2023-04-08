@@ -2,10 +2,10 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:wyniki/Widgets/add_player_alert.dart';
-import 'package:wyniki/Widgets/game_settings.dart';
-import 'package:wyniki/Widgets/players_list_container.dart';
-import 'package:wyniki/Widgets/start_button.dart';
+import 'package:wyniki/widgets/add_player_alert.dart';
+import 'package:wyniki/widgets/game_settings.dart';
+import 'package:wyniki/widgets/players_list_container.dart';
+import 'package:wyniki/widgets/start_button.dart';
 
 class SetUpGame extends StatelessWidget {
   const SetUpGame({super.key});
@@ -19,7 +19,7 @@ class SetUpGame extends StatelessWidget {
           actions: [
             IconButton(
               onPressed: () {
-                showDialog(
+                showDialog<Widget>(
                   context: context,
                   builder: (context) => AddPlayerAlert(),
                 );

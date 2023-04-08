@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:wyniki/Providers/game.dart';
-import 'package:wyniki/Widgets/player_score_container.dart';
-import 'package:wyniki/Widgets/score_keyboard.dart';
-import 'package:wyniki/Widgets/winner_alert.dart';
+import 'package:wyniki/widgets/player_score_container.dart';
+import 'package:wyniki/widgets/score_keyboard.dart';
+import 'package:wyniki/widgets/winner_alert.dart';
 
 class GameScreen extends StatelessWidget {
   const GameScreen({super.key});
@@ -16,8 +16,7 @@ class GameScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final gameProvider = Provider.of<Game>(context);
-    gameProvider.createPlayersModels();
+    final gameProvider = Provider.of<Game>(context)..createPlayersModels();
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
@@ -42,7 +41,6 @@ class GameScreen extends StatelessWidget {
                       return PlayerScoreContainer(
                         gameProvider.playersAndScoresModels[index].name,
                         gameProvider.playersAndScoresModels[index].score,
-                        gameProvider.playersAndScoresModels[index].isPlaying,
                         index,
                       );
                     },

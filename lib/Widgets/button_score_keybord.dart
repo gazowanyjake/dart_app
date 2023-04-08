@@ -8,7 +8,7 @@ import 'package:provider/provider.dart';
 import 'package:wyniki/Providers/game.dart';
 
 class ButtonScoreKeyboard extends StatelessWidget {
-  ButtonScoreKeyboard({
+  const ButtonScoreKeyboard({
     super.key,
     this.content,
     this.textContent,
@@ -18,7 +18,7 @@ class ButtonScoreKeyboard extends StatelessWidget {
   final Widget? content;
   final String? textContent;
   final int width;
-  int point;
+  final int point;
 
   @override
   Widget build(BuildContext context) {

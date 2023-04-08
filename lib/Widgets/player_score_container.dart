@@ -5,20 +5,18 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:wyniki/Providers/game.dart';
-import 'package:wyniki/Widgets/dart_hit_score_container.dart';
+import 'package:wyniki/widgets/dart_hit_score_container.dart';
 
 class PlayerScoreContainer extends StatelessWidget {
-  PlayerScoreContainer(
-      this.playersName, this.playersScore, this.isPlaying, this.playerIndex,
+  const PlayerScoreContainer(
+      this.playersName, this.playersScore, this.playerIndex,
       {super.key,});
   final String playersName;
   final int playersScore;
-  bool isPlaying;
   final int playerIndex;
   @override
   Widget build(BuildContext context) {
     final gameProvider = Provider.of<Game>(context, listen: false);
-    // gameProvider.getPlayerScoreContainer(playerIndex);
     return Container(
       margin: const EdgeInsets.only(left: 10, right: 10, top: 10),
       height: 100,
