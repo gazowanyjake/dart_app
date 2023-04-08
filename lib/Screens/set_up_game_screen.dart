@@ -1,11 +1,15 @@
+// ignore_for_file: public_member_api_docs
+
 import 'package:flutter/material.dart';
 
-import '../Widgets/game_settings.dart';
-import '../Widgets/players_list_container.dart';
-import '../Widgets/add_player_alert.dart';
-import '../Widgets/start_button.dart';
+import 'package:wyniki/Widgets/add_player_alert.dart';
+import 'package:wyniki/Widgets/game_settings.dart';
+import 'package:wyniki/Widgets/players_list_container.dart';
+import 'package:wyniki/Widgets/start_button.dart';
 
 class SetUpGame extends StatelessWidget {
+  const SetUpGame({super.key});
+
   static const routeName = '/setUpGameScreen';
 
   @override
@@ -17,18 +21,18 @@ class SetUpGame extends StatelessWidget {
               onPressed: () {
                 showDialog(
                   context: context,
-                  builder: (context) => AddPlayerAlert()
+                  builder: (context) => AddPlayerAlert(),
                 );
               },
-              icon: Icon(Icons.person_add_alt_1),
+              icon: const Icon(Icons.person_add_alt_1),
             ),
           ],
           backgroundColor: Colors.black,
-          title: Text('Bede grał w dart!'),
+          title: const Text("Let's play dart!"),
         ),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
+          children: const [
             GameSettings(),
             PlayersListContainer(),
             StartButton(),

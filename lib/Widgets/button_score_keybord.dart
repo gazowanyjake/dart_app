@@ -1,18 +1,24 @@
+// ignore_for_file: public_member_api_docs
+
 import 'package:flutter/material.dart';
 
-import 'package:provider/provider.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:provider/provider.dart';
 
-import '../Providers/game.dart';
+import 'package:wyniki/Providers/game.dart';
 
 class ButtonScoreKeyboard extends StatelessWidget {
+  ButtonScoreKeyboard({
+    super.key,
+    this.content,
+    this.textContent,
+    this.width = 1,
+    this.point = 0,
+  });
   final Widget? content;
   final String? textContent;
   final int width;
   int point;
-
-  ButtonScoreKeyboard(
-      {this.content, this.textContent, this.width = 1, this.point = 0});
 
   @override
   Widget build(BuildContext context) {
@@ -22,16 +28,18 @@ class ButtonScoreKeyboard extends StatelessWidget {
       mainAxisCellCount: 1,
       child: GestureDetector(
         onTap: () {
-         gameProvider.scoreChanger(point);
+          gameProvider.scoreChanger(point);
         },
         child: Container(
           alignment: Alignment.center,
-          margin: EdgeInsets.all(3),
+          margin: const EdgeInsets.all(3),
           color: Colors.black,
           child: textContent != null
               ? Text(
                   '$textContent',
-                  style: TextStyle(color: Theme.of(context).accentColor),
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.secondary,
+                  ),
                 )
               : content,
         ),

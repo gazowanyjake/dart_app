@@ -1,9 +1,9 @@
+// ignore_for_file: public_member_api_docs
+
 import 'package:flutter/material.dart';
 
-import 'package:collection/collection.dart';
-
-import '../Models/live_box.dart';
-import '../Models/player_model.dart';
+import 'package:wyniki/Models/live_box.dart';
+import 'package:wyniki/Models/player_model.dart';
 
 class Game with ChangeNotifier {
   bool isDouble = false;
@@ -47,7 +47,7 @@ class Game with ChangeNotifier {
       undoLiveBox();
     }
 
-    print(scoreHistory);
+    // print(scoreHistory);
     notifyListeners();
   }
 
@@ -62,68 +62,6 @@ class Game with ChangeNotifier {
     playerScoreContainerIndex = containerIndex;
   }
 
-  // void liveScoreBox() {
-  //   if (liveScoreBox1 == -1) {
-  //     liveScoreBox1 = liveScore;
-  //   } else if (liveScoreBox2 == -1) {
-  //     liveScoreBox2 = liveScore;
-  //   } else if (liveScoreBox3 == -1) {
-  //     liveScoreBox3 = liveScore;
-  //   } else {
-  //     liveScoreBox1 = liveScore;
-  //     liveScoreBox2 = -1;
-  //     liveScoreBox3 = -1;
-  //   }
-  //   scoreHistory.add(liveScore);
-  //   addPlayersScores();
-  //   // sumOfTheeHits();
-  //   // nextPlayer();
-  //   notifyListeners();
-  // }
-
-  // void undoHitScore() {
-  //   if (scoreHistory.isEmpty) {
-  //     return;
-  //   } else {
-  //     int lastHit = scoreHistory.last;
-  //     undoPlayersScores();
-  //     // previousPlayer();
-  //     scoreHistory.remove(lastHit);
-  //     // updatePlayersScores();
-  //     if (lastHit == liveScoreBox3) {
-  //       liveScoreBox3 = -1;
-  //     } else if (lastHit == liveScoreBox2) {
-  //       liveScoreBox2 = -1;
-  //     } else if (lastHit == liveScoreBox1 && scoreHistory.isNotEmpty) {
-  //       liveScoreBox1 = scoreHistory[scoreHistory.length - 3];
-  //       liveScoreBox2 = scoreHistory[scoreHistory.length - 2];
-  //       liveScoreBox3 = scoreHistory.last;
-  //     } else {
-  //       liveScoreBox1 = -1;
-  //     }
-  //   }
-  //   print(scoreHistory);
-  //   notifyListeners();
-  // }
-
-  // List<int> scoreOfThreeOut = [];
-
-  // void sumOfTheeHits() {
-  //   int chunkSize = 3;
-  //   List<int> scoreOfThree = [];
-  //   for (var i = 0; i < scoreHistory.length; i += chunkSize) {
-  //     scoreOfThree.add(scoreHistory
-  //         .sublist(
-  //             i,
-  //             i + chunkSize > scoreHistory.length
-  //                 ? scoreHistory.length
-  //                 : i + chunkSize)
-  //         .sum);
-  //   }
-  //   scoreOfThreeOut = scoreOfThree;
-  //   // print(scoreOfThreeOut);
-  // }
-
   List<int> liveBoxList = [];
 
   Map<int, int> liveBoxMap = {};
@@ -131,7 +69,7 @@ class Game with ChangeNotifier {
   List<LiveBox> liveBoxModels = [];
 
   void liveBoxMapGenerate() {
-    for (int i = 0; i < 3 * players.length; i++) {
+    for (var i = 0; i < 3 * players.length; i++) {
       liveBoxList.add(i);
     }
     liveBoxMap = {for (var element in liveBoxList) element: -1};
@@ -154,9 +92,9 @@ class Game with ChangeNotifier {
       } else if (liveBoxMap[2] == -1) {
         liveBoxMap.update(2, (value) => player0.last);
       } else {
-        liveBoxMap.update(0, (value) => player0.last);
-        liveBoxMap.update(1, (value) => -1);
-        liveBoxMap.update(2, (value) => -1);
+        liveBoxMap..update(0, (value) => player0.last)
+        ..update(1, (value) => -1)
+        ..update(2, (value) => -1);
       }
     } else if (playerIndexList[currentPlayerIndex] == 1) {
       if (liveBoxMap[3] == -1) {
@@ -166,13 +104,13 @@ class Game with ChangeNotifier {
       } else if (liveBoxMap[5] == -1) {
         liveBoxMap.update(5, (value) => player1.last);
       } else {
-        liveBoxMap.update(3, (value) => player1.last);
-        liveBoxMap.update(4, (value) => -1);
-        liveBoxMap.update(5, (value) => -1);
+        liveBoxMap..update(3, (value) => player1.last)
+        ..update(4, (value) => -1)
+        ..update(5, (value) => -1);
       }
     }
     liveBoxModelsGenerate();
-    print(liveBoxMap);
+    // print(liveBoxMap);
   }
 
   int returnHitScore1(int currentPlayerTemp) {
@@ -192,7 +130,7 @@ class Game with ChangeNotifier {
     }
     return 66;
   }
-
+  /// ostatnie scoreboxy 1 i 2 gracza
   int returnHitScore3(int currentPlayerTemp) {
     if (currentPlayerTemp == 0) {
       return liveBoxModels[2].hitscore;
@@ -206,7 +144,7 @@ class Game with ChangeNotifier {
     if (scoreHistory.isEmpty) {
       return;
     } else {
-      int lastHit = scoreHistory.last;
+      final lastHit = scoreHistory.last;
       undoPlayersScores();
       undoPlayerScoreHistory();
       scoreHistory.remove(lastHit);
@@ -216,9 +154,9 @@ class Game with ChangeNotifier {
         } else if (lastHit == liveBoxMap[1]) {
           liveBoxMap.update(1, (value) => -1);
         } else if (lastHit == liveBoxMap[0] && player0.isNotEmpty) {
-          liveBoxMap.update(0, (value) => player0[player0.length - 3]);
-          liveBoxMap.update(1, (value) => player0[player0.length - 2]);
-          liveBoxMap.update(2, (value) => player0.last);
+          liveBoxMap..update(0, (value) => player0[player0.length - 3])
+          ..update(1, (value) => player0[player0.length - 2])
+          ..update(2, (value) => player0.last);
         } else {
           liveBoxMap.update(0, (value) => -1);
         }
@@ -228,9 +166,9 @@ class Game with ChangeNotifier {
         } else if (lastHit == liveBoxMap[4]) {
           liveBoxMap.update(4, (value) => -1);
         } else if (lastHit == liveBoxMap[3] && player1.isNotEmpty) {
-          liveBoxMap.update(3, (value) => player1[player1.length - 3]);
-          liveBoxMap.update(4, (value) => player1[player1.length - 2]);
-          liveBoxMap.update(5, (value) => player1.last);
+          liveBoxMap..update(3, (value) => player1[player1.length - 3])
+          ..update(4, (value) => player1[player1.length - 2])
+          ..update(5, (value) => player1.last);
         } else {
           liveBoxMap.update(3, (value) => -1);
         }
@@ -249,13 +187,13 @@ class Game with ChangeNotifier {
   //
   //
 
-  List<String> _players = [
+  final List<String> _players = [
     'Kuba',
     'Julka',
   ];
 
-  List player0 = [];
-  List player1 = [];
+  List<int> player0 = [];
+  List<int> player1 = [];
 
   void playerScoreHistoryGenerator() {
     if (playerIndexList[currentPlayerIndex] == 0) {
@@ -278,18 +216,18 @@ class Game with ChangeNotifier {
   }
 
   void playerIndexCreator() {
-    int playersNumber = players.length;
-    List<int> temp = [];
+    final playersNumber = players.length;
+    var temp = <int>[];
     if (playersNumber == 1) {
-      for (int i = 0; i < 50; i++) {
+      for (var i = 0; i < 50; i++) {
         temp += [0, 0, 0];
       }
     } else if (playersNumber == 2) {
-      for (int i = 0; i < 50; i++) {
+      for (var i = 0; i < 50; i++) {
         temp += [0, 0, 0, 1, 1, 1];
       }
     } else if (playersNumber == 3) {
-      for (int i = 0; i < 50; i++) {
+      for (var i = 0; i < 50; i++) {
         temp += [0, 0, 0, 1, 1, 1, 2, 2, 2];
       }
     }
@@ -315,7 +253,7 @@ class Game with ChangeNotifier {
     scoreHistory.add(liveScore);
     playerScoreHistoryGenerator();
     playersAndScores.update(players[playerIndexList[currentPlayerIndex]],
-        (value) => value = value - scoreHistory.last);
+        (value) => value = value - scoreHistory.last,);
 
     // print(playersAndScores);
     updateLiveBox();
@@ -338,7 +276,7 @@ class Game with ChangeNotifier {
     }
     currentPlayerIndexSetterAdd();
     // print(playerIndexList[currentPlayerIndex]);
-    print(currentPlayerIndex);
+    // print(currentPlayerIndex);
     createPlayersModels();
     // print(liveBoxMap[0]);
   }
@@ -348,113 +286,107 @@ class Game with ChangeNotifier {
 
   void endScoreValidationPlayer0() {
     if (player0.last == liveBoxMap[2]) {
-      print('doszlem');
-      liveBoxMap.update(2, (value) => -1);
-      liveBoxMap.update(1, (value) => -1);
-      liveBoxMap.update(0, (value) => -1);
+      liveBoxMap..update(2, (value) => -1)
+      ..update(1, (value) => -1)
+      ..update(0, (value) => -1);
       liveBoxModelsGenerate();
-      for (int i = 0; i < 3; i++) {
+      for (var i = 0; i < 3; i++) {
         playersAndScores.update(
-            players[0], (value) => value = value + player0.last as int);
+            players[0], (value) => value = value + player0.last,);
         player0.removeLast();
         scoreHistory.removeLast();
       }
-      for (int j = 0; j < 3; j++) {
+      for (var j = 0; j < 3; j++) {
         player0.add(0);
         scoreHistory.add(0);
       }
     } else if (player0.last == liveBoxMap[1]) {
-      print('doszlem1');
-      liveBoxMap.update(1, (value) => -1);
-      liveBoxMap.update(0, (value) => -1);
+      liveBoxMap..update(1, (value) => -1)
+      ..update(0, (value) => -1);
       liveBoxModelsGenerate();
-      for (int i = 0; i < 2; i++) {
+      for (var i = 0; i < 2; i++) {
         playersAndScores.update(
-            players[0], (value) => value = value + player0.last as int);
+            players[0], (value) => value = value + player0.last,);
         player0.removeLast();
         scoreHistory.removeLast();
       }
-      for (int j = 0; j < 3; j++) {
+      for (var j = 0; j < 3; j++) {
         player0.add(0);
         scoreHistory.add(0);
       }
       currentPlayerIndexSetterAdd();
     } else if (player0.last == liveBoxMap[0]) {
-      print('doszlem2');
       liveBoxMap.update(0, (value) => -1);
       liveBoxModelsGenerate();
       playersAndScores.update(
-          players[0], (value) => value = value + player0.last as int);
+          players[0], (value) => value = value + player0.last,);
       player0.removeLast();
       scoreHistory.removeLast();
-      for (int j = 0; j < 3; j++) {
+      for (var j = 0; j < 3; j++) {
         player0.add(0);
         scoreHistory.add(0);
       }
-    for (int i = 0; i < 2; i++) {
-      currentPlayerIndexSetterAdd();
-    }
+      for (var i = 0; i < 2; i++) {
+        currentPlayerIndexSetterAdd();
+      }
     }
     if (playersAndScoresModels[0].score < 0 && player0.length > 2) {
-      liveBoxMap.update(2, (value) => player0.last);
-      liveBoxMap.update(1, (value) => player0[player0.length - 2]);
-      liveBoxMap.update(0, (value) => player0[player0.length - 3]);
+      liveBoxMap..update(2, (value) => player0.last)
+      ..update(1, (value) => player0[player0.length - 2])
+      ..update(0, (value) => player0[player0.length - 3]);
     }
   }
 
   void endScoreValidationPlayer1() {
     if (player1.last == liveBoxMap[5]) {
-      print('doszlem10');
-      liveBoxMap.update(5, (value) => -1);
-      liveBoxMap.update(4, (value) => -1);
-      liveBoxMap.update(3, (value) => -1);
+      liveBoxMap..update(5, (value) => -1)
+      ..update(4, (value) => -1)
+      ..update(3, (value) => -1);
       liveBoxModelsGenerate();
-      for (int i = 0; i < 3; i++) {
+      for (var i = 0; i < 3; i++) {
         playersAndScores.update(
-            players[1], (value) => value = value + player1.last as int);
+            players[1], (value) => value = value + player1.last,);
         player1.removeLast();
         scoreHistory.removeLast();
       }
-      for (int j = 0; j < 3; j++) {
+      for (var j = 0; j < 3; j++) {
         player1.add(0);
         scoreHistory.add(0);
       }
     } else if (player1.last == liveBoxMap[4]) {
-      print('doszlem11');
-      liveBoxMap.update(4, (value) => -1);
-      liveBoxMap.update(3, (value) => -1);
+      liveBoxMap..update(4, (value) => -1)
+      ..update(3, (value) => -1);
       liveBoxModelsGenerate();
-      for (int i = 0; i < 2; i++) {
+      for (var i = 0; i < 2; i++) {
         playersAndScores.update(
-            players[1], (value) => value = value + player1.last as int);
+            players[1], (value) => value = value + player1.last,);
         player1.removeLast();
         scoreHistory.removeLast();
       }
-      for (int j = 0; j < 3;j++) {
+      for (var j = 0; j < 3; j++) {
         player1.add(0);
         scoreHistory.add(0);
       }
       currentPlayerIndexSetterAdd();
     } else if (player1.last == liveBoxMap[3]) {
-      print('doszlem12');
       liveBoxMap.update(3, (value) => -1);
       liveBoxModelsGenerate();
       playersAndScores.update(
-          players[1], (value) => value = value + player1.last as int);
+          players[1], (value) => value = value + player1.last,);
       player1.removeLast();
       scoreHistory.removeLast();
-      for (int j = 0; j < 3;j++) {
+      for (var j = 0; j < 3; j++) {
         player1.add(0);
         scoreHistory.add(0);
       }
-    for (int i = 0; i < 2; i++) {
-      currentPlayerIndexSetterAdd();
-    }
+      for (var i = 0; i < 2; i++) {
+        currentPlayerIndexSetterAdd();
+      }
     }
     if (playersAndScoresModels[0].score < 0 && player1.length > 2) {
-      liveBoxMap.update(2, (value) => player1.last);
-      liveBoxMap.update(1, (value) => player1[player1.length - 2]);
-      liveBoxMap.update(0, (value) => player1[player1.length - 3]);
+      liveBoxMap..update(2, (value) => player1.last)
+      ..update(1, (value) => player1[player1.length - 2])
+      ..update(0, (value) => player1[player1.length - 3]);
     }
   }
 
@@ -482,7 +414,7 @@ class Game with ChangeNotifier {
   void undoPlayersScores() {
     currentPlayerIndexSetterUndo();
     playersAndScores.update(players[playerIndexList[currentPlayerIndex]],
-        (value) => value = value + scoreHistory.last);
+        (value) => value = value + scoreHistory.last,);
     // print(playersAndScores);
     // print(currentPlayerIndex);
   }
@@ -491,12 +423,12 @@ class Game with ChangeNotifier {
 
   void setPlayersInitialScores() {
     if (playersInitialScores.isEmpty) {
-      for (int i = 0; i < _players.length; i++) {
+      for (var i = 0; i < _players.length; i++) {
         playersInitialScores.add(initScore);
       }
     } else {
       playersInitialScores = [];
-      for (int i = 0; i < _players.length; i++) {
+      for (var i = 0; i < _players.length; i++) {
         playersInitialScores.add(initScore);
       }
     }
@@ -518,67 +450,3 @@ class Game with ChangeNotifier {
     notifyListeners();
   }
 }
-
-
-
-  // void player1Score(){
-  //   for (var e = 0; e < scoreOfThree.length; e++) {
-  //   int playersNumber = playersList.length;
-  //   int player1;
-  //   player1 = scoreOfThree[e = e + playersNumber];
-  //   print(player1);
-  // }
-          // scoreOfThree.fold(0, (previousValue, element) {
-          //   for(var i = 0; i < scoreOfThree.length; i ++){
-          //     int playersNumber = playersList.length;
-          //     return
-          //   }}
-
-  // int? addPlayersScores(bool isPlaying, int playerIndex) {
-  //   int score = 0;
-  //   if(isPlaying) {
-  //         score = playersAndScoresModels[playerIndex].score - scoreHistory.last;
-  //         playersAndScoresModels[playerIndex].isPlaying = false;
-  //   }else {
-  //     score = playersAndScoresModels[playerIndex].score;
-  //     playersAndScoresModels[playerIndex].isPlaying = true;
-  //   }
-  //   notifyListeners();
-  //   return score;
-  //   // print(playersAndScores);
-  // }
-  // List<LiveBox> liveBoxList = [];
-
-  // void createLiveBoxList() {
-  //   liveBoxList = liveboxMap.entries
-  //       .map((livebox) => LiveBox(index: livebox.key, hitscore: livebox.value))
-  //       .toList();
-  // }
-
-  // Map<int, int> liveboxMap = {};
-
-  // void createLiveBoxMap() {
-  //   liveboxMap = Map.fromIterables(indexListForLiveScore, scoreHistory);
-  //   print(liveboxMap);
-  // }
-  // void nextPlayer() {}
-
-  // void previousPlayer() {
-  //   int playerNumber = players.length;
-  //   for (int i = 0; i < scoreOfThreeOut.length; i += playerNumber) {
-  //     playersAndScores.update(
-  //         players[i], (value) => value = value + scoreHistory.last);
-  //   }
-  // }
-
-  // void addPlayersScores() {
-  //   playersAndScores.update(
-  //       players[0], (value) => value = value - scoreHistory.last);
-  //   print(playersAndScores);
-  // }
-   // List <int> sublistPlayerIndexList = [];
-  // void createSubListPlayerIndexList(){
-  //   sublistPlayerIndexList = playerIndexList.sublist(0, currentPlayerIndex);
-  //   print(sublistPlayerIndexList);
-  //   createLiveBoxMap();
-  // }

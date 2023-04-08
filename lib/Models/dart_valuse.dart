@@ -1,4 +1,6 @@
-List<String> punktyLista = [
+// ignore_for_file: public_member_api_docs
+
+List<String> punktyList = [
 '101',
 '201',
 '301',
@@ -10,13 +12,13 @@ List<String> punktyLista = [
 '901',
 ];
 
-List<String> checkOutLista = [
+List<String> checkOutList = [
 'Straight Out',
 // 'Double Out',
 // 'Master Out',
 ];
 
-List<String> setsLista = [
+List<String> setsList = [
 '1',
 // '2',
 // '3',
@@ -29,7 +31,7 @@ List<String> setsLista = [
 // '10',
 ];
 
-List<String> legsLista = [
+List<String> legsList = [
 '1',
 // '2',
 // '3',

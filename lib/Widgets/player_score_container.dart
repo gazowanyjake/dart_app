@@ -1,76 +1,84 @@
+// ignore_for_file: public_member_api_docs
+
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 
-import '../Providers/game.dart';
-import '../Widgets/dart_hit_score_container.dart';
+import 'package:wyniki/Providers/game.dart';
+import 'package:wyniki/Widgets/dart_hit_score_container.dart';
 
 class PlayerScoreContainer extends StatelessWidget {
+  PlayerScoreContainer(
+      this.playersName, this.playersScore, this.isPlaying, this.playerIndex,
+      {super.key,});
   final String playersName;
   final int playersScore;
   bool isPlaying;
   final int playerIndex;
-  PlayerScoreContainer(
-      this.playersName, this.playersScore, this.isPlaying, this.playerIndex);
   @override
   Widget build(BuildContext context) {
     final gameProvider = Provider.of<Game>(context, listen: false);
     // gameProvider.getPlayerScoreContainer(playerIndex);
     return Container(
-      margin: EdgeInsets.only(left: 10, right: 10, top: 10),
+      margin: const EdgeInsets.only(left: 10, right: 10, top: 10),
       height: 100,
-      decoration: BoxDecoration(color: Colors.grey),
+      decoration: const BoxDecoration(color: Colors.grey),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Container(
+          SizedBox(
             width: 87,
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 5,
                 ),
                 Text(
                   '$playersScore',
-                  style: TextStyle(fontSize: 50, fontWeight: FontWeight.bold),
+                  style: const TextStyle(
+                    fontSize: 50,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 Text(
                   playersName,
-                  style: TextStyle(fontSize: 20),
+                  style: const TextStyle(fontSize: 20),
                 ),
               ],
             ),
           ),
           Column(
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 5,
               ),
               Row(
                 children: [
-                  DartHitScoreContainer(gameProvider.returnHitScore1(playerIndex)),
-                  SizedBox(
+                  DartHitScoreContainer(
+                      gameProvider.returnHitScore1(playerIndex),),
+                  const SizedBox(
                     width: 5,
                   ),
-                  DartHitScoreContainer(gameProvider.returnHitScore2(playerIndex)),
-                  SizedBox(
+                  DartHitScoreContainer(
+                      gameProvider.returnHitScore2(playerIndex),),
+                  const SizedBox(
                     width: 5,
                   ),
-                  DartHitScoreContainer(gameProvider.returnHitScore3(playerIndex)),
+                  DartHitScoreContainer(
+                      gameProvider.returnHitScore3(playerIndex),),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
-              Text('score that round'),
+              const Text('score that round'),
             ],
           ),
           Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               Row(
-                children: [
+                children: const [
                   Text('sets:0'),
                   SizedBox(
                     width: 5,
@@ -78,7 +86,7 @@ class PlayerScoreContainer extends StatelessWidget {
                   Text('legs:0'),
                 ],
               ),
-              Text('darts thrown'),
+              const Text('darts thrown'),
             ],
           )
         ],

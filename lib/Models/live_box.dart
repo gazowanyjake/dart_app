@@ -1,9 +1,11 @@
+// ignore_for_file: public_member_api_docs
+
 class LiveBox {
-  int index;
-  int hitscore;
 
   LiveBox({
     required this.index,
     required this.hitscore,
   });
+  int index;
+  int hitscore;
 }
