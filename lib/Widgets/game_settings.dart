@@ -3,12 +3,10 @@
 import 'package:flutter/material.dart';
 
 import 'package:wyniki/Models/dart_valuse.dart';
-import 'package:wyniki/Widgets/my_drop_down_button.dart';
+import 'package:wyniki/widgets/my_drop_down_button.dart';
 
 class GameSettings extends StatelessWidget {
   const GameSettings({super.key});
-
-
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -16,21 +14,21 @@ class GameSettings extends StatelessWidget {
       children: [
         MyDropDownButton(
           title: 'Punkty',
-          text: punktyList,
+          list: pointsList,
         ),
         MyDropDownButton(
           title: 'Check-Out',
-          text: checkOutList,
-          width: 125,
+          list: checkOutList,
+          width: 140,
           color: Colors.red,
         ),
         MyDropDownButton(
           title: 'Sets',
-          text: setsList,
+          list: setsList,
         ),
         MyDropDownButton(
           title: 'Legs',
-          text: legsList,
+          list: legsList,
         ),
       ],
     );

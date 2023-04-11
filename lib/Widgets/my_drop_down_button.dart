@@ -9,29 +9,32 @@ import 'package:wyniki/Providers/game.dart';
 class MyDropDownButton extends StatefulWidget {
   const MyDropDownButton({
     required this.title,
-    required this.text,
+    required this.list,
+    this.onTap,
     this.width = 65,
     this.color = Colors.blue,
     super.key,
   });
 
   final String title;
-  final List<String> text;
+  final List<String> list;
   final double width;
   final Color color;
+  final Function? onTap;
 
   @override
   State<MyDropDownButton> createState() => _MyButtonState();
 }
 
 class _MyButtonState extends State<MyDropDownButton> {
-  String? _dropDownValue;
+  late String _dropDownValue;
 
   @override
   void initState() {
     super.initState();
-    _dropDownValue = widget.text.first;
+    _dropDownValue = widget.list.first;
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +59,7 @@ class _MyButtonState extends State<MyDropDownButton> {
               width: widget.width,
               decoration: BoxDecoration(color: widget.color),
               child: Text(
-                _dropDownValue!,
+                _dropDownValue,
                 style: TextStyle(
                   color: Theme.of(context).colorScheme.secondary,
                   fontWeight: FontWeight.bold,
@@ -66,7 +69,7 @@ class _MyButtonState extends State<MyDropDownButton> {
             ),
           ],
         ),
-        items: widget.text.map<DropdownMenuItem<String>>((String value) {
+        items: widget.list.map<DropdownMenuItem<String>>((String value) {
           return DropdownMenuItem<String>(
             alignment: Alignment.center,
             value: value,
@@ -79,11 +82,12 @@ class _MyButtonState extends State<MyDropDownButton> {
             ),
           );
         }).toList(),
-        onChanged: (value) {
+        onChanged:(value) {
+          widget.title == 'Punkty' ?
           setState(() {
             _dropDownValue = value!;
             gameProvider.scoreSetter(int.parse(value));
-          });
+          }) : null;
         },
         dropdownStyleData: DropdownStyleData(
           maxHeight: 150,

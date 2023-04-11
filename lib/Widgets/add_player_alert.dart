@@ -28,14 +28,35 @@ class AddPlayerAlert extends StatelessWidget {
       ),
       actions: [
         Consumer<Game>(
-          builder: (context, players, child) => TextButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-              players.addPlayer(addPlayerName.text);
-            },
-            child: const Text('ok'),
-          ),
-        )
+          builder: (context, gameProvider, child) {
+            if (gameProvider.players.length < 2) {
+              return TextButton(
+                child: const Text(
+                  'OK',
+                  style: TextStyle(
+                    fontSize: 20,
+                  ),
+                ),
+                onPressed: () {
+                  gameProvider.addPlayer(addPlayerName.text);
+                  Navigator.of(context).pop();
+                },
+              );
+            } else {
+              return TextButton(
+                child: const Text(
+                  'Max player count reached!',
+                  style: TextStyle(
+                    fontSize: 20,
+                  ),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              );
+            }
+          },
+        ),
       ],
     );
   }

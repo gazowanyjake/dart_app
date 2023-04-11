@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:wyniki/Providers/game.dart';
-import 'package:wyniki/Screens/game_screen.dart';
-import 'package:wyniki/Screens/set_up_game_screen.dart';
+import 'package:wyniki/screens/game_screen.dart';
+import 'package:wyniki/screens/set_up_game_screen.dart';
 
 void main() => runApp(const MyApp());
 

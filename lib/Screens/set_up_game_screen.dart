@@ -7,6 +7,7 @@ import 'package:wyniki/widgets/game_settings.dart';
 import 'package:wyniki/widgets/players_list_container.dart';
 import 'package:wyniki/widgets/start_button.dart';
 
+
 class SetUpGame extends StatelessWidget {
   const SetUpGame({super.key});
 
@@ -14,14 +15,17 @@ class SetUpGame extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return SafeArea(
+      child: Scaffold(
         appBar: AppBar(
           actions: [
             IconButton(
               onPressed: () {
                 showDialog<Widget>(
                   context: context,
-                  builder: (context) => AddPlayerAlert(),
+                  builder: (context) {
+                    return AddPlayerAlert();
+                  },
                 );
               },
               icon: const Icon(Icons.person_add_alt_1),
@@ -40,6 +44,7 @@ class SetUpGame extends StatelessWidget {
         ),
         backgroundColor: Colors.black,
         resizeToAvoidBottomInset: false,
+      ),
     );
   }
 }

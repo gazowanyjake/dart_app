@@ -21,22 +21,28 @@ class WinnerAlert extends StatelessWidget {
         style: TextStyle(color: Theme.of(context).colorScheme.secondary),
       ),
       content: Text(
-      'Congrats $playerName',
-      style: TextStyle(color: Theme.of(context).colorScheme.secondary),
+        'Congrats $playerName',
+        style: TextStyle(color: Theme.of(context).colorScheme.secondary),
       ),
       actions: [
         Consumer<Game>(
           builder: (context, players, child) => TextButton(
             onPressed: () {
               Navigator.of(context).pop();
-              gameProvider..winner = false
-              ..scoreHistory = []
-              ..player0 = []
-              ..player1 = []
-              ..currentPlayerIndex = 0;
+              gameProvider
+                ..winner = false
+                ..scoreHistory = []
+                ..player0 = []
+                ..player1 = []
+                ..currentPlayerIndex = 0;
               Navigator.of(context).pushReplacementNamed(SetUpGame.routeName);
             },
-            child: const Text('ok'),
+            child: const Text(
+              'OK',
+              style: TextStyle(
+                fontSize: 20,
+              ),
+            ),
           ),
         )
       ],

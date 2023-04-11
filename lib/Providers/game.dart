@@ -52,9 +52,6 @@ class Game with ChangeNotifier {
   }
 
   int liveScore = 0;
-  int liveScoreBox1 = -1;
-  int liveScoreBox2 = -1;
-  int liveScoreBox3 = -1;
 
   int playerScoreContainerIndex = 0;
 
@@ -194,6 +191,14 @@ class Game with ChangeNotifier {
 
   List<int> player0 = [];
   List<int> player1 = [];
+ 
+  Color currentPlayerIndicator (int player){
+    if(playerIndexList[currentPlayerIndex] == player){
+      return Colors.green;
+    } else {
+      return Colors.grey;
+    }
+  }
 
   void playerScoreHistoryGenerator() {
     if (playerIndexList[currentPlayerIndex] == 0) {
@@ -225,10 +230,6 @@ class Game with ChangeNotifier {
     } else if (playersNumber == 2) {
       for (var i = 0; i < 50; i++) {
         temp += [0, 0, 0, 1, 1, 1];
-      }
-    } else if (playersNumber == 3) {
-      for (var i = 0; i < 50; i++) {
-        temp += [0, 0, 0, 1, 1, 1, 2, 2, 2];
       }
     }
     playerIndexList = temp;

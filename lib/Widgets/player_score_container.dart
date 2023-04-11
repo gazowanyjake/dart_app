@@ -9,18 +9,27 @@ import 'package:wyniki/widgets/dart_hit_score_container.dart';
 
 class PlayerScoreContainer extends StatelessWidget {
   const PlayerScoreContainer(
-      this.playersName, this.playersScore, this.playerIndex,
-      {super.key,});
+    this.playersName,
+    this.playersScore,
+    this.playerIndex, {
+    super.key,
+  });
   final String playersName;
   final int playersScore;
   final int playerIndex;
   @override
   Widget build(BuildContext context) {
-    final gameProvider = Provider.of<Game>(context, listen: false);
+    final gameProvider = Provider.of<Game>(context);
+    final playerIndicator = gameProvider.currentPlayerIndicator(playerIndex);
     return Container(
       margin: const EdgeInsets.only(left: 10, right: 10, top: 10),
       height: 100,
-      decoration: const BoxDecoration(color: Colors.grey),
+      decoration: BoxDecoration(
+        color: Colors.grey,
+        border: Border(
+          left: BorderSide(color: playerIndicator, width: 16),
+        ),
+      ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
@@ -34,7 +43,7 @@ class PlayerScoreContainer extends StatelessWidget {
                 Text(
                   '$playersScore',
                   style: const TextStyle(
-                    fontSize: 50,
+                    fontSize: 40,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -53,17 +62,20 @@ class PlayerScoreContainer extends StatelessWidget {
               Row(
                 children: [
                   DartHitScoreContainer(
-                      gameProvider.returnHitScore1(playerIndex),),
+                    gameProvider.returnHitScore1(playerIndex),
+                  ),
                   const SizedBox(
                     width: 5,
                   ),
                   DartHitScoreContainer(
-                      gameProvider.returnHitScore2(playerIndex),),
+                    gameProvider.returnHitScore2(playerIndex),
+                  ),
                   const SizedBox(
                     width: 5,
                   ),
                   DartHitScoreContainer(
-                      gameProvider.returnHitScore3(playerIndex),),
+                    gameProvider.returnHitScore3(playerIndex),
+                  ),
                 ],
               ),
               const SizedBox(

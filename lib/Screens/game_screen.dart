@@ -17,38 +17,43 @@ class GameScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final gameProvider = Provider.of<Game>(context)..createPlayersModels();
-    return Scaffold(
-      backgroundColor: Colors.black,
-      appBar: AppBar(
-        leading: IconButton(
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-          icon: const Icon(Icons.arrow_back),
-        ),
-        title: const Text('Have Fun!'),
-        backgroundColor: Colors.black,
-      ),
-      body: gameProvider.winner
-          ? WinnerAlert(gameProvider.winnerName)
-          : Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(
-                  child: ListView.builder(
-                    itemCount: gameProvider.players.length,
-                    itemBuilder: (context, index) {
-                      return PlayerScoreContainer(
-                        gameProvider.playersAndScoresModels[index].name,
-                        gameProvider.playersAndScoresModels[index].score,
-                        index,
-                      );
-                    },
-                  ),
-                ),
-                const ScoreKeyboard(),
-              ],
+    return ColoredBox(
+      color: Colors.grey,
+      child: SafeArea(
+        child: Scaffold(
+          backgroundColor: Colors.black,
+          appBar: AppBar(
+            leading: IconButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              icon: const Icon(Icons.arrow_back),
             ),
+            title: const Text('Have Fun!'),
+            backgroundColor: Colors.black,
+          ),
+          body: gameProvider.winner
+              ? WinnerAlert(gameProvider.winnerName)
+              : Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: ListView.builder(
+                        itemCount: gameProvider.players.length,
+                        itemBuilder: (context, index) {
+                          return PlayerScoreContainer(
+                            gameProvider.playersAndScoresModels[index].name,
+                            gameProvider.playersAndScoresModels[index].score,
+                            index,
+                          );
+                        },
+                      ),
+                    ),
+                    const ScoreKeyboard(),
+                  ],
+                ),
+        ),
+      ),
     );
   }
 }
