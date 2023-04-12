@@ -26,6 +26,13 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         theme: ThemeData(
+          textTheme: const TextTheme(
+            titleMedium: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
+            ),
+          ),
           primaryColor: Colors.blue,
           colorScheme:
               ColorScheme.fromSwatch().copyWith(secondary: Colors.white),
@@ -34,7 +41,7 @@ class MyApp extends StatelessWidget {
         home: const SetUpGame(),
         routes: {
           GameScreen.routeName: (context) => const GameScreen(),
-          SetUpGame.routeName: (context) =>const SetUpGame(),
+          SetUpGame.routeName: (context) => const SetUpGame(),
         },
       ),
     );

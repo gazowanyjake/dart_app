@@ -18,7 +18,7 @@ class PlayersListContainer extends StatelessWidget {
       child: Column(
         children: [
           const SizedBox(
-            height: 20,
+            height: 24,
           ),
           Container(
             color: Colors.blueGrey,
