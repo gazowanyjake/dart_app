@@ -17,46 +17,36 @@ class AddPlayerAlert extends StatelessWidget {
       backgroundColor: Colors.grey,
       title: Text(
         'Add a new Player!',
-        style: TextStyle(color: Theme.of(context).colorScheme.secondary),
+        style: Theme.of(context).textTheme.titleMedium,
       ),
       content: TextField(
         controller: addPlayerName,
         decoration: InputDecoration(
           hintText: "Player's name",
-          hintStyle: TextStyle(color: Theme.of(context).colorScheme.secondary),
+          hintStyle: Theme.of(context).textTheme.titleMedium,
         ),
       ),
       actions: [
         Consumer<Game>(
           builder: (context, gameProvider, child) {
-            if (gameProvider.players.length < 2) {
-              return TextButton(
-                child: const Text(
-                  'OK',
-                  style: TextStyle(
-                    fontSize: 20,
-                  ),
-                ),
-                onPressed: () {
+            return TextButton(
+              child: Text(
+                gameProvider.players.length < 2
+                    ? 'OK'
+                    : 'Max player count reached!',
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+              onPressed: () {
+                if (gameProvider.players.length < 2) {
                   gameProvider.addPlayer(addPlayerName.text);
                   Navigator.of(context).pop();
-                },
-              );
-            } else {
-              return TextButton(
-                child: const Text(
-                  'Max player count reached!',
-                  style: TextStyle(
-                    fontSize: 20,
-                  ),
-                ),
-                onPressed: () {
+                } else {
                   Navigator.of(context).pop();
-                },
-              );
-            }
+                }
+              },
+            );
           },
-        ),
+        )
       ],
     );
   }

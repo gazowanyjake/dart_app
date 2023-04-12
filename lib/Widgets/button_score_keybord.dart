@@ -32,7 +32,7 @@ class ButtonScoreKeyboard extends StatelessWidget {
         },
         child: Container(
           alignment: Alignment.center,
-          margin: const EdgeInsets.all(3),
+          margin: const EdgeInsets.all(4),
           color: Colors.black,
           child: textContent != null
               ? Text(

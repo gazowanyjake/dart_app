@@ -16,17 +16,13 @@ class StartButton extends StatelessWidget {
     return GestureDetector(
       child: Container(
         alignment: Alignment.center,
-        margin: const EdgeInsets.all(2),
-        height: 50,
-        width: 250,
+        margin: const EdgeInsets.all(4),
+        height: 48,
+        width: 248,
         decoration: const BoxDecoration(color: Colors.red),
         child: Text(
           'Start',
-          style: TextStyle(
-            color: Theme.of(context).colorScheme.secondary,
-            fontWeight: FontWeight.bold,
-            fontSize: 20,
-          ),
+          style: Theme.of(context).textTheme.titleMedium,
         ),
       ),
       onTap: () async {

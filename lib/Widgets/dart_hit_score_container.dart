@@ -12,8 +12,8 @@ class DartHitScoreContainer extends StatelessWidget {
     return Container(
       alignment: Alignment.center,
       decoration: const BoxDecoration(color: Colors.black),
-      height: 50,
-      width: 50,
+      height: 48,
+      width: 48,
       child: hitScore == -1 ? null : Text(
         '$hitScore',
         style: const TextStyle(color: Colors.white),

@@ -22,8 +22,8 @@ class PlayerScoreContainer extends StatelessWidget {
     final gameProvider = Provider.of<Game>(context);
     final playerIndicator = gameProvider.currentPlayerIndicator(playerIndex);
     return Container(
-      margin: const EdgeInsets.only(left: 10, right: 10, top: 10),
-      height: 100,
+      margin: const EdgeInsets.only(left: 8, right: 8, top: 8),
+      height: 96,
       decoration: BoxDecoration(
         color: Colors.grey,
         border: Border(
@@ -34,11 +34,11 @@ class PlayerScoreContainer extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           SizedBox(
-            width: 87,
+            width: 88,
             child: Column(
               children: [
                 const SizedBox(
-                  height: 5,
+                  height: 4,
                 ),
                 Text(
                   '$playersScore',
@@ -57,7 +57,7 @@ class PlayerScoreContainer extends StatelessWidget {
           Column(
             children: [
               const SizedBox(
-                height: 5,
+                height: 4,
               ),
               Row(
                 children: [
@@ -65,13 +65,13 @@ class PlayerScoreContainer extends StatelessWidget {
                     gameProvider.returnHitScore1(playerIndex),
                   ),
                   const SizedBox(
-                    width: 5,
+                    width: 4,
                   ),
                   DartHitScoreContainer(
                     gameProvider.returnHitScore2(playerIndex),
                   ),
                   const SizedBox(
-                    width: 5,
+                    width: 4,
                   ),
                   DartHitScoreContainer(
                     gameProvider.returnHitScore3(playerIndex),
@@ -79,7 +79,7 @@ class PlayerScoreContainer extends StatelessWidget {
                 ],
               ),
               const SizedBox(
-                height: 10,
+                height: 12,
               ),
               const Text('score that round'),
             ],
@@ -91,7 +91,7 @@ class PlayerScoreContainer extends StatelessWidget {
                 children: const [
                   Text('sets:0'),
                   SizedBox(
-                    width: 5,
+                    width: 4,
                   ),
                   Text('legs:0'),
                 ],

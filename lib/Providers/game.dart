@@ -185,8 +185,8 @@ class Game with ChangeNotifier {
   //
 
   final List<String> _players = [
-    'Kuba',
-    'Julka',
+    'Player 1',
+    'Player 2',
   ];
 
   List<int> player0 = [];

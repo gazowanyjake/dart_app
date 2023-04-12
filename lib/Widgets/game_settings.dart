@@ -19,7 +19,7 @@ class GameSettings extends StatelessWidget {
         MyDropDownButton(
           title: 'Check-Out',
           list: checkOutList,
-          width: 140,
+          width: 148,
           color: Colors.red,
         ),
         MyDropDownButton(

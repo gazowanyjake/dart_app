@@ -17,22 +17,20 @@ class GameScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final gameProvider = Provider.of<Game>(context)..createPlayersModels();
-    return ColoredBox(
-      color: Colors.grey,
-      child: SafeArea(
-        child: Scaffold(
-          backgroundColor: Colors.black,
-          appBar: AppBar(
-            leading: IconButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              icon: const Icon(Icons.arrow_back),
-            ),
-            title: const Text('Have Fun!'),
-            backgroundColor: Colors.black,
+    return Scaffold(
+        backgroundColor: Colors.black,
+        appBar: AppBar(
+          leading: IconButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            icon: const Icon(Icons.arrow_back),
           ),
-          body: gameProvider.winner
+          title: const Text('Have Fun!'),
+          backgroundColor: Colors.black,
+        ),
+        body: SafeArea(
+          child: gameProvider.winner
               ? WinnerAlert(gameProvider.winnerName)
               : Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -53,7 +51,6 @@ class GameScreen extends StatelessWidget {
                   ],
                 ),
         ),
-      ),
     );
   }
 }
