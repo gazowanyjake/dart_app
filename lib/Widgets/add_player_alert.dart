@@ -1,10 +1,14 @@
+// ignore_for_file: public_member_api_docs
+
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 
-import '../Providers/game.dart';
+import 'package:wyniki/Providers/game.dart';
 
 class AddPlayerAlert extends StatelessWidget {
+  AddPlayerAlert({super.key});
+
   final addPlayerName = TextEditingController();
 
   @override
@@ -13,26 +17,35 @@ class AddPlayerAlert extends StatelessWidget {
       backgroundColor: Colors.grey,
       title: Text(
         'Add a new Player!',
-        style: TextStyle(color: Theme.of(context).accentColor),
+        style: Theme.of(context).textTheme.titleMedium,
       ),
-      content: Container(
-        child: TextField(
-          controller: addPlayerName,
-          decoration: InputDecoration(
-            hintText: 'Player\'s name',
-            hintStyle: TextStyle(color: Theme.of(context).accentColor),
-          ),
+      content: TextField(
+        controller: addPlayerName,
+        decoration: InputDecoration(
+          hintText: "Player's name",
+          hintStyle: Theme.of(context).textTheme.titleMedium,
         ),
       ),
       actions: [
         Consumer<Game>(
-          builder: (context, players, child) => TextButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-              players.addPlayer(addPlayerName.text);
-            },
-            child: Text('ok'),
-          ),
+          builder: (context, gameProvider, child) {
+            return TextButton(
+              child: Text(
+                gameProvider.players.length < 2
+                    ? 'OK'
+                    : 'Max player count reached!',
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+              onPressed: () {
+                if (gameProvider.players.length < 2) {
+                  gameProvider.addPlayer(addPlayerName.text);
+                  Navigator.of(context).pop();
+                } else {
+                  Navigator.of(context).pop();
+                }
+              },
+            );
+          },
         )
       ],
     );

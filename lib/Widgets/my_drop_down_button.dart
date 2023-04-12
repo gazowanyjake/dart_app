@@ -1,35 +1,41 @@
-import 'package:flutter/material.dart';
-
-import 'package:provider/provider.dart';
+// ignore_for_file: public_member_api_docs
 
 import 'package:dropdown_button2/dropdown_button2.dart';
-import '../Providers/game.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'package:wyniki/Providers/game.dart';
 
 class MyDropDownButton extends StatefulWidget {
-  MyDropDownButton({
+  const MyDropDownButton({
     required this.title,
-    required this.text,
-    this.width = 65,
+    required this.list,
+    this.onTap,
+    this.width = 72,
     this.color = Colors.blue,
+    super.key,
   });
 
   final String title;
-  final List<String> text;
+  final List<String> list;
   final double width;
   final Color color;
+  final Function? onTap;
 
   @override
   State<MyDropDownButton> createState() => _MyButtonState();
 }
 
 class _MyButtonState extends State<MyDropDownButton> {
-  String? _dropDownValue;
+  late String _dropDownValue;
 
   @override
   void initState() {
     super.initState();
-    _dropDownValue = widget.text.first;
+    _dropDownValue = widget.list.first;
   }
+
+
   @override
   Widget build(BuildContext context) {
     final gameProvider = Provider.of<Game>(context, listen: false);
@@ -37,56 +43,49 @@ class _MyButtonState extends State<MyDropDownButton> {
       child: DropdownButton2(
         customButton: Column(
           children: [
-            SizedBox(
-              height: 5,
+            const SizedBox(
+              height: 4,
             ),
             Text(
               widget.title,
-              style: TextStyle(color: Theme.of(context).accentColor,),
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.secondary,
+              ),
             ),
             Container(
               alignment: Alignment.center,
-              margin: EdgeInsets.all(2),
-              height: 50,
+              margin: const EdgeInsets.all(2),
+              height: 48,
               width: widget.width,
               decoration: BoxDecoration(color: widget.color),
               child: Text(
-                _dropDownValue!,
-                style: TextStyle(
-                  color: Theme.of(context).accentColor,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
-                ),
+                _dropDownValue,
+                style: Theme.of(context).textTheme.titleMedium,
               ),
             ),
           ],
         ),
-        items: widget.text.map<DropdownMenuItem<String>>((String value) {
+        items: widget.list.map<DropdownMenuItem<String>>((String value) {
           return DropdownMenuItem<String>(
             alignment: Alignment.center,
             value: value,
             child: Text(
               value,
-              style: TextStyle(
-                color: Theme.of(context).accentColor,
-                fontWeight: FontWeight.bold,
-              ),
+              style: Theme.of(context).textTheme.titleMedium,
             ),
           );
         }).toList(),
-        onChanged: (value) {
+        onChanged:(value) {
+          widget.title == 'Punkty' ?
           setState(() {
             _dropDownValue = value!;
             gameProvider.scoreSetter(int.parse(value));
-          });
+          }) : null;
         },
-        menuItemStyleData: MenuItemStyleData(
-          padding: EdgeInsets.only(left: 0),
-        ),
         dropdownStyleData: DropdownStyleData(
-          maxHeight: 150,
+          maxHeight: 152,
           width: widget.width,
-          offset: Offset(2, 0),
+          offset: const Offset(2, 0),
           decoration: BoxDecoration(color: widget.color),
         ),
       ),

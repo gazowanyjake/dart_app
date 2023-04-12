@@ -1,41 +1,48 @@
+// ignore_for_file: public_member_api_docs
+
 import 'package:flutter/material.dart';
 
-import '../Widgets/game_settings.dart';
-import '../Widgets/players_list_container.dart';
-import '../Widgets/add_player_alert.dart';
-import '../Widgets/start_button.dart';
+import 'package:wyniki/widgets/add_player_alert.dart';
+import 'package:wyniki/widgets/game_settings.dart';
+import 'package:wyniki/widgets/players_list_container.dart';
+import 'package:wyniki/widgets/start_button.dart';
 
 class SetUpGame extends StatelessWidget {
+  const SetUpGame({super.key});
   static const routeName = '/setUpGameScreen';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          actions: [
-            IconButton(
-              onPressed: () {
-                showDialog(
-                  context: context,
-                  builder: (context) => AddPlayerAlert()
-                );
-              },
-              icon: Icon(Icons.person_add_alt_1),
-            ),
-          ],
-          backgroundColor: Colors.black,
-          title: Text('Bede grał w dart!'),
-        ),
-        body: Column(
+      appBar: AppBar(
+        actions: [
+          IconButton(
+            onPressed: () {
+              showDialog<Widget>(
+                context: context,
+                builder: (context) {
+                  return AddPlayerAlert();
+                },
+              );
+            },
+            icon: const Icon(Icons.person_add_alt_1),
+          ),
+        ],
+        backgroundColor: Colors.black,
+        title: const Text("Let's play dart!"),
+      ),
+      body: SafeArea(
+        child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
+          children: const [
             GameSettings(),
             PlayersListContainer(),
             StartButton(),
           ],
         ),
-        backgroundColor: Colors.black,
-        resizeToAvoidBottomInset: false,
+      ),
+      backgroundColor: Colors.black,
+      resizeToAvoidBottomInset: false,
     );
   }
 }

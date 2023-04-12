@@ -1,12 +1,14 @@
+// ignore_for_file: public_member_api_docs
+
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 
-import 'Screens/set_up_game_screen.dart';
-import './Screens/game_screen.dart';
-import './Providers/game.dart';
+import 'package:wyniki/Providers/game.dart';
+import 'package:wyniki/screens/game_screen.dart';
+import 'package:wyniki/screens/set_up_game_screen.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -24,14 +26,22 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         theme: ThemeData(
+          textTheme: const TextTheme(
+            titleMedium: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
+            ),
+          ),
           primaryColor: Colors.blue,
-          accentColor: Colors.white,
+          colorScheme:
+              ColorScheme.fromSwatch().copyWith(secondary: Colors.white),
         ),
         title: 'Wyniki',
-        home: SetUpGame(),
+        home: const SetUpGame(),
         routes: {
-          GameScreen.routeName: (context) => GameScreen(),
-          SetUpGame.routeName:(context) => SetUpGame(),
+          GameScreen.routeName: (context) => const GameScreen(),
+          SetUpGame.routeName: (context) => const SetUpGame(),
         },
       ),
     );
