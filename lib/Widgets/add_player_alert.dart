@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 
-import 'package:wyniki/Providers/game.dart';
+import 'package:wyniki/Providers/newgame_provider.dart';
 
 class AddPlayerAlert extends StatelessWidget {
   AddPlayerAlert({super.key});
@@ -27,23 +27,16 @@ class AddPlayerAlert extends StatelessWidget {
         ),
       ),
       actions: [
-        Consumer<Game>(
+        Consumer<GameProvider>(
           builder: (context, gameProvider, child) {
             return TextButton(
-              child: Text(
-                gameProvider.players.length < 2
-                    ? 'OK'
-                    : 'Max player count reached!',
+              child: Text('OK',
                 style: Theme.of(context).textTheme.titleMedium,
               ),
               onPressed: () {
-                if (gameProvider.players.length < 2) {
                   gameProvider.addPlayer(addPlayerName.text);
                   Navigator.of(context).pop();
-                } else {
-                  Navigator.of(context).pop();
-                }
-              },
+                },
             );
           },
         )

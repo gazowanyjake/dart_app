@@ -4,7 +4,7 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:wyniki/Providers/game.dart';
+import 'package:wyniki/Providers/newgame_provider.dart';
 
 class MyDropDownButton extends StatefulWidget {
   const MyDropDownButton({
@@ -38,7 +38,7 @@ class _MyButtonState extends State<MyDropDownButton> {
 
   @override
   Widget build(BuildContext context) {
-    final gameProvider = Provider.of<Game>(context, listen: false);
+    final gameProvider = Provider.of<GameProvider>(context, listen: false);
     return DropdownButtonHideUnderline(
       child: DropdownButton2(
         customButton: Column(
@@ -79,7 +79,7 @@ class _MyButtonState extends State<MyDropDownButton> {
           widget.title == 'Punkty' ?
           setState(() {
             _dropDownValue = value!;
-            gameProvider.scoreSetter(int.parse(value));
+            gameProvider.scoreSetterBeforeGame(int.parse(value));
           }) : null;
         },
         dropdownStyleData: DropdownStyleData(

@@ -1,10 +1,9 @@
 // ignore_for_file: public_member_api_docs
-
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 
-import 'package:wyniki/Providers/game.dart';
+import 'package:wyniki/Providers/newgame_provider.dart';
 import 'package:wyniki/screens/game_screen.dart';
 import 'package:wyniki/screens/set_up_game_screen.dart';
 
@@ -21,7 +20,7 @@ class MyApp extends StatelessWidget {
         //   create: (context) => Players(),
         // ),
         ChangeNotifierProvider(
-          create: (context) => Game(),
+          create: (context) => GameProvider(),
         ),
       ],
       child: MaterialApp(

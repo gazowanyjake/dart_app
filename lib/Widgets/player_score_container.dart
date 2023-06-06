@@ -4,22 +4,23 @@ import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 
-import 'package:wyniki/Providers/game.dart';
+import 'package:wyniki/Models/newplayer_model.dart';
+import 'package:wyniki/Providers/newgame_provider.dart';
 import 'package:wyniki/widgets/dart_hit_score_container.dart';
 
 class PlayerScoreContainer extends StatelessWidget {
-  const PlayerScoreContainer(
-    this.playersName,
-    this.playersScore,
-    this.playerIndex, {
+  PlayerScoreContainer({
+    required this.player,
+    required this.playerIndex,
     super.key,
   });
-  final String playersName;
-  final int playersScore;
-  final int playerIndex;
+
+  Player player;
+  int playerIndex;
+  
   @override
   Widget build(BuildContext context) {
-    final gameProvider = Provider.of<Game>(context);
+    final gameProvider = Provider.of<GameProvider>(context);
     final playerIndicator = gameProvider.currentPlayerIndicator(playerIndex);
     return Container(
       margin: const EdgeInsets.only(left: 8, right: 8, top: 8),
@@ -41,14 +42,14 @@ class PlayerScoreContainer extends StatelessWidget {
                   height: 4,
                 ),
                 Text(
-                  '$playersScore',
+                  '${player.initScore}',
                   style: const TextStyle(
                     fontSize: 40,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 Text(
-                  playersName,
+                  player.playerName,
                   style: const TextStyle(fontSize: 20),
                 ),
               ],
@@ -62,19 +63,19 @@ class PlayerScoreContainer extends StatelessWidget {
               Row(
                 children: [
                   DartHitScoreContainer(
-                    gameProvider.returnHitScore1(playerIndex),
+                    player.firstHit, player.testColor,
                   ),
                   const SizedBox(
                     width: 4,
                   ),
                   DartHitScoreContainer(
-                    gameProvider.returnHitScore2(playerIndex),
+                    player.secondHit, player.testColor,
                   ),
                   const SizedBox(
                     width: 4,
                   ),
                   DartHitScoreContainer(
-                    gameProvider.returnHitScore3(playerIndex),
+                    player.thirdHit, player.testColor,
                   ),
                 ],
               ),

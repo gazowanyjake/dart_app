@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 
-import 'package:wyniki/Providers/game.dart';
+import 'package:wyniki/Providers/newgame_provider.dart';
 
 class PlayersListContainer extends StatelessWidget {
   const PlayersListContainer({super.key});
@@ -12,7 +12,7 @@ class PlayersListContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final gameProvider = Provider.of<Game>(context);
+    final gameProvider = Provider.of<GameProvider>(context);
     final playersList = gameProvider.players;
     return Expanded(
       child: Column(
@@ -34,7 +34,7 @@ class PlayersListContainer extends StatelessWidget {
                       color: Theme.of(context).colorScheme.secondary,
                     ),
                     title: Text(
-                      playersList[index],
+                      playersList[index].playerName,
                       style: TextStyle(
                         color: Theme.of(context).colorScheme.secondary,
                       ),

@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:provider/provider.dart';
 
-import 'package:wyniki/Providers/game.dart';
+import 'package:wyniki/Providers/newgame_provider.dart';
 
 class ButtonScoreKeyboard extends StatelessWidget {
   const ButtonScoreKeyboard({
@@ -22,7 +22,7 @@ class ButtonScoreKeyboard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final gameProvider = Provider.of<Game>(context, listen: false);
+    final gameProvider = Provider.of<GameProvider>(context, listen: false);
     return StaggeredGridTile.count(
       crossAxisCellCount: width,
       mainAxisCellCount: 1,
