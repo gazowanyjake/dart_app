@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 
-import 'package:wyniki/Providers/game.dart';
+import 'package:wyniki/Providers/newgame_provider.dart';
 import 'package:wyniki/Screens/game_screen.dart';
 
 class StartButton extends StatelessWidget {
@@ -12,7 +12,7 @@ class StartButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final gameProvider = Provider.of<Game>(context, listen: false);
+    final gameProvider = Provider.of<GameProvider>(context, listen: false);
     return GestureDetector(
       child: Container(
         alignment: Alignment.center,
@@ -25,11 +25,9 @@ class StartButton extends StatelessWidget {
           style: Theme.of(context).textTheme.titleMedium,
         ),
       ),
-      onTap: () async {
-        gameProvider..playerIndexCreator()
-        ..setPlayersInitialScores()
-        ..liveBoxMapGenerate();
-        await Navigator.of(context).pushNamed(GameScreen.routeName);
+      onTap: () {
+        gameProvider.scoreSetterStartButton();
+        Navigator.of(context).pushNamed(GameScreen.routeName);
       },
     );
   }

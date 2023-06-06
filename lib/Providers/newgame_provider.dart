@@ -188,6 +188,9 @@ class GameProvider with ChangeNotifier {
         playerIndexProvider = 0;
       }
     }
+    if(players.length == 1){
+      players[0].testColor = Colors.black;
+    }
     players[playerIndexProvider].initScore -= hitPointFinal;
     players[playerIndexProvider].playersScoreHistory.add(hitPointFinal);
     print(
