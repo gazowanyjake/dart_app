@@ -11,7 +11,7 @@ class MyDropDownButton extends StatefulWidget {
     required this.title,
     required this.list,
     this.onTap,
-    this.width = 72,
+    this.width = 68,
     this.color = Colors.blue,
     super.key,
   });
@@ -35,7 +35,6 @@ class _MyButtonState extends State<MyDropDownButton> {
     _dropDownValue = widget.list.first;
   }
 
-
   @override
   Widget build(BuildContext context) {
     final gameProvider = Provider.of<GameProvider>(context, listen: false);
@@ -48,16 +47,17 @@ class _MyButtonState extends State<MyDropDownButton> {
             ),
             Text(
               widget.title,
-              style: TextStyle(
-                color: Theme.of(context).colorScheme.secondary,
-              ),
+              style: Theme.of(context).textTheme.titleMedium,
             ),
             Container(
               alignment: Alignment.center,
               margin: const EdgeInsets.all(2),
               height: 48,
               width: widget.width,
-              decoration: BoxDecoration(color: widget.color),
+              decoration: BoxDecoration(
+                color: widget.color,
+                borderRadius: BorderRadius.circular(30),
+              ),
               child: Text(
                 _dropDownValue,
                 style: Theme.of(context).textTheme.titleMedium,
@@ -75,18 +75,22 @@ class _MyButtonState extends State<MyDropDownButton> {
             ),
           );
         }).toList(),
-        onChanged:(value) {
-          widget.title == 'Punkty' ?
-          setState(() {
-            _dropDownValue = value!;
-            gameProvider.scoreSetterBeforeGame(int.parse(value));
-          }) : null;
+        onChanged: (value) {
+          widget.title == 'Points'
+              ? setState(() {
+                  _dropDownValue = value!;
+                  gameProvider.scoreSetterBeforeGame(int.parse(value));
+                })
+              : null;
         },
         dropdownStyleData: DropdownStyleData(
           maxHeight: 152,
           width: widget.width,
           offset: const Offset(2, 0),
-          decoration: BoxDecoration(color: widget.color),
+          decoration: BoxDecoration(
+            color: widget.color,
+            borderRadius: BorderRadius.circular(30),
+          ),
         ),
       ),
     );

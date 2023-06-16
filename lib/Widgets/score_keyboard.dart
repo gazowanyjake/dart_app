@@ -12,7 +12,7 @@ class ScoreKeyboard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(color: Colors.grey),
+      decoration: BoxDecoration(color: Color(0xFF7C5F96)),
       width: double.infinity,
       child: StaggeredGrid.count(
           crossAxisCount: 7,

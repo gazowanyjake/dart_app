@@ -17,7 +17,7 @@ class PlayerScoreContainer extends StatelessWidget {
 
   Player player;
   int playerIndex;
-  
+
   @override
   Widget build(BuildContext context) {
     final gameProvider = Provider.of<GameProvider>(context);
@@ -26,7 +26,7 @@ class PlayerScoreContainer extends StatelessWidget {
       margin: const EdgeInsets.only(left: 8, right: 8, top: 8),
       height: 96,
       decoration: BoxDecoration(
-        color: Colors.grey,
+        color: Color(0xFF1E88DD),
         border: Border(
           left: BorderSide(color: playerIndicator, width: 16),
         ),
@@ -43,14 +43,18 @@ class PlayerScoreContainer extends StatelessWidget {
                 ),
                 Text(
                   '${player.initScore}',
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 40,
                     fontWeight: FontWeight.bold,
+                    color: Theme.of(context).textTheme.titleMedium?.color,
                   ),
                 ),
                 Text(
                   player.playerName,
-                  style: const TextStyle(fontSize: 20),
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Theme.of(context).textTheme.titleMedium?.color,
+                  ),
                 ),
               ],
             ),
@@ -63,41 +67,63 @@ class PlayerScoreContainer extends StatelessWidget {
               Row(
                 children: [
                   DartHitScoreContainer(
-                    player.firstHit, player.testColor,
+                    player.firstHit,
+                    player.testColor,
                   ),
                   const SizedBox(
                     width: 4,
                   ),
                   DartHitScoreContainer(
-                    player.secondHit, player.testColor,
+                    player.secondHit,
+                    player.testColor,
                   ),
                   const SizedBox(
                     width: 4,
                   ),
                   DartHitScoreContainer(
-                    player.thirdHit, player.testColor,
+                    player.thirdHit,
+                    player.testColor,
                   ),
                 ],
               ),
               const SizedBox(
                 height: 12,
               ),
-              const Text('score that round'),
+              Text(
+                'score that round',
+                style: TextStyle(
+                    color: Theme.of(context).textTheme.titleMedium?.color),
+              ),
             ],
           ),
           Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               Row(
-                children: const [
-                  Text('sets:0'),
-                  SizedBox(
+                children: [
+                  Text(
+                    'sets:0',
+                    style: TextStyle(
+                      color: Theme.of(context).textTheme.titleMedium?.color,
+                    ),
+                  ),
+                  const SizedBox(
                     width: 4,
                   ),
-                  Text('legs:0'),
+                  Text(
+                    'legs:0',
+                    style: TextStyle(
+                      color: Theme.of(context).textTheme.titleMedium?.color,
+                    ),
+                  ),
                 ],
               ),
-              const Text('darts thrown'),
+              Text(
+                'darts thrown',
+                style: TextStyle(
+                  color: Theme.of(context).textTheme.titleMedium?.color,
+                ),
+              ),
             ],
           )
         ],

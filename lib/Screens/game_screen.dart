@@ -18,8 +18,10 @@ class GameScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final gameProvider = Provider.of<GameProvider>(context);
     return Scaffold(
+      extendBodyBehindAppBar: true,
       backgroundColor: Colors.black,
       appBar: AppBar(
+        elevation: 0,
         leading: IconButton(
           onPressed: () {
             Navigator.of(context).pop();
@@ -27,30 +29,40 @@ class GameScreen extends StatelessWidget {
           icon: const Icon(Icons.arrow_back),
         ),
         title: const Text('Have Fun!'),
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.transparent,
       ),
-      body: SafeArea(
-        child: 
-        gameProvider.winner
-            ? WinnerAlert(gameProvider.winnerName)
-            : 
-            Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: ListView.builder(
-                      itemCount: gameProvider.players.length,
-                      itemBuilder: (context, index) {
-                        return PlayerScoreContainer(
-                          player: gameProvider.players[index],
-                          playerIndex: index,
-                        );
-                      },
+      body: DecoratedBox(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              Theme.of(context).colorScheme.primary,
+              Theme.of(context).colorScheme.secondary,
+            ],
+          ),
+        ),
+        child: SafeArea(
+          child: gameProvider.winner
+              ? WinnerAlert(gameProvider.winnerName)
+              : Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: ListView.builder(
+                        itemCount: gameProvider.players.length,
+                        itemBuilder: (context, index) {
+                          return PlayerScoreContainer(
+                            player: gameProvider.players[index],
+                            playerIndex: index,
+                          );
+                        },
+                      ),
                     ),
-                  ),
-                  const ScoreKeyboard(),
-                ],
-              ),
+                    const ScoreKeyboard(),
+                  ],
+                ),
+        ),
       ),
     );
   }

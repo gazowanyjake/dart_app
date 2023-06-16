@@ -14,7 +14,10 @@ class SetUpGame extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.transparent,
         actions: [
           IconButton(
             onPressed: () {
@@ -26,22 +29,38 @@ class SetUpGame extends StatelessWidget {
               );
             },
             icon: const Icon(Icons.person_add_alt_1),
+            color: Theme.of(context).iconTheme.color,
           ),
         ],
-        backgroundColor: Colors.black,
-        title: const Text("Let's play dart!"),
-      ),
-      body: SafeArea(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: const [
-            GameSettings(),
-            PlayersListContainer(),
-            StartButton(),
-          ],
+        title: Text(
+          "Let's play dart!",
+          style: Theme.of(context).textTheme.titleLarge,
         ),
       ),
-      backgroundColor: Colors.black,
+      body: DecoratedBox(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              Theme.of(context).colorScheme.primary,
+              Theme.of(context).colorScheme.secondary,
+            ],
+          ),
+        ),
+        child: SafeArea(
+          child: LayoutBuilder(
+            builder: (_, p1) => Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                const GameSettings(),
+                PlayersListContainer(p1.maxHeight - 200),
+                const StartButton(),
+              ],
+            ),
+          ),
+        ),
+      ),
       resizeToAvoidBottomInset: false,
     );
   }

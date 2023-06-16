@@ -5,11 +5,25 @@ import 'package:flutter/material.dart';
 import 'package:wyniki/Models/newplayer_model.dart';
 
 class GameProvider with ChangeNotifier {
-  List<Player> players = [
-    Player(playerName: 'p1', initScore: 101, playersScoreHistory: []),
-    Player(playerName: 'p2', initScore: 101, playersScoreHistory: []),
-    Player(playerName: 'p3', initScore: 101, playersScoreHistory: []),
-  ];
+  List<Player> players = [];
+
+  int initScore = 101;
+
+  List<int> scoreHistory = [];
+
+  int playerIndexProvider = 0;
+
+  double scoreHistoryNaTrzy = 0;
+
+  double testNaTrzy = 0;
+
+  bool isDouble = false;
+  bool isTripple = false;
+
+  bool winner = false;
+  String winnerName = '';
+
+  Color boxColor = Colors.black;
 
   void addPlayer(String playerNameInput) {
     players.add(
@@ -26,8 +40,6 @@ class GameProvider with ChangeNotifier {
     players.remove(player);
     notifyListeners();
   }
-
-  int initScore = 101;
 
   void scoreSetterBeforeGame(int initScoreChosen) {
     initScore = initScoreChosen;
@@ -51,7 +63,7 @@ class GameProvider with ChangeNotifier {
     if (playerIndexProvider == playerIndex &&
         players[playerIndex].thirdHit == -1 &&
         players[playerIndex].testColor == Colors.black) {
-      return Colors.green;
+      return const Color(0xFF60E1E0);
     } else if ((playerIndexProvider + 1 < players.length
                 ? playerIndexProvider + 1
                 : 0) ==
@@ -59,7 +71,7 @@ class GameProvider with ChangeNotifier {
         players[playerIndex - 1 >= 0 ? playerIndex - 1 : players.length - 1]
                 .thirdHit !=
             -1) {
-      return Colors.green;
+      return const Color(0xFF60E1E0);
     } else if (players[
                     playerIndex - 1 >= 0 ? playerIndex - 1 : players.length - 1]
                 .testColor ==
@@ -68,42 +80,31 @@ class GameProvider with ChangeNotifier {
                 ? playerIndexProvider + 1
                 : 0) ==
             playerIndex) {
-      return Colors.green;
+      return const Color(0xFF60E1E0);
     } else {
-      return Colors.grey;
+      return Colors.transparent;
     }
   }
 
-  List<int> scoreHistory = [];
-
-  int playerIndexProvider = 0;
-
-  double scoreHistoryNaTrzy = 0;
-
-  double testNaTrzy = 0;
-
   void testCalculator() {
     scoreHistoryNaTrzy = scoreHistory.length / 3;
-
     testNaTrzy = scoreHistoryNaTrzy - scoreHistoryNaTrzy.floorToDouble();
   }
-
-  bool isDouble = false;
-  bool isTripple = false;
 
   void addScoreComponent(int playerNumber, int playerNumberNext) {
     if (playerIndexProvider == playerNumber) {
       if (players[playerNumber].firstHit == -1) {
         players[playerNumber].firstHit = scoreHistory.last;
-      } else if (scoreHistory.length > 3 * players.length &&
+      } else if (players[playerNumber].playersScoreHistory.length > 3 &&
           players[playerNumber].firstHit ==
               players[playerNumber].playersScoreHistory[
-                  players[playerNumber].playersScoreHistory.length - 3] &&
+                  players[playerNumber].playersScoreHistory.length - 4] &&
           players[playerNumber].secondHit ==
               players[playerNumber].playersScoreHistory[
-                  players[playerNumber].playersScoreHistory.length - 2] &&
+                  players[playerNumber].playersScoreHistory.length - 3] &&
           players[playerNumber].thirdHit ==
-              players[playerNumber].playersScoreHistory.last) {
+              players[playerNumber].playersScoreHistory[
+                  players[playerNumber].playersScoreHistory.length - 2]) {
         players[playerNumber].firstHit = -1;
         players[playerNumber].secondHit = -1;
         players[playerNumber].thirdHit = -1;
@@ -128,11 +129,6 @@ class GameProvider with ChangeNotifier {
     }
   }
 
-  bool winner = false;
-  String winnerName = '';
-
-  Color boxColor = Colors.black;
-
   void endScoreValidation(Player currentPlayer) {
     if (currentPlayer.initScore < 0) {
       if (currentPlayer.thirdHit != -1) {
@@ -154,22 +150,13 @@ class GameProvider with ChangeNotifier {
         scoreHistory.removeLast();
         currentPlayer.playersScoreHistory.removeLast();
       }
-      players[playerIndexProvider + 1 < players.length
-              ? playerIndexProvider + 1
-              : 0]
-          .firstHit = -1;
-      players[playerIndexProvider + 1 < players.length
-              ? playerIndexProvider + 1
-              : 0]
-          .secondHit = -1;
-      players[playerIndexProvider + 1 < players.length
-              ? playerIndexProvider + 1
-              : 0]
-          .thirdHit = -1;
-      players[playerIndexProvider + 1 < players.length
-              ? playerIndexProvider + 1
-              : 0]
-          .testColor = Colors.black;
+      final nextPlayer = playerIndexProvider + 1 < players.length
+          ? playerIndexProvider + 1
+          : 0;
+      players[nextPlayer].firstHit = -1;
+      players[nextPlayer].secondHit = -1;
+      players[nextPlayer].thirdHit = -1;
+      players[nextPlayer].testColor = Colors.black;
       currentPlayer.testColor = Colors.red;
     } else if (currentPlayer.initScore == 0) {
       winner = true;
@@ -188,86 +175,48 @@ class GameProvider with ChangeNotifier {
         playerIndexProvider = 0;
       }
     }
-    if(players.length == 1){
+    if (players.length == 1) {
       players[0].testColor = Colors.black;
     }
     players[playerIndexProvider].initScore -= hitPointFinal;
     players[playerIndexProvider].playersScoreHistory.add(hitPointFinal);
-    print(
-        'index : $playerIndexProvider historia: ${players[playerIndexProvider].playersScoreHistory}');
     addScoreComponent(
       playerIndexProvider,
       playerIndexProvider + 1 < players.length ? playerIndexProvider + 1 : 0,
     );
     endScoreValidation(players[playerIndexProvider]);
     notifyListeners();
-    print('score: $scoreHistory testnatrzy: $testNaTrzy');
   }
 
   void undoScoreComponent(int playerNumber, int lastHitTemp) {
+    final nextPlayer = playerNumber + 1 < players.length ? playerNumber + 1 : 0;
     if (lastHitTemp == players[playerNumber].thirdHit &&
-        players[playerNumber + 1 < players.length ? playerNumber + 1 : 0]
-                .firstHit ==
-            -1 &&
+        players[nextPlayer].firstHit == -1 &&
         scoreHistory.length > 3 * players.length - 2) {
       players[playerNumber].thirdHit = -1;
-      players[playerNumber + 1 < players.length ? playerNumber + 1 : 0]
-              .firstHit =
-          players[playerNumber + 1 < players.length ? playerNumber + 1 : 0]
-                  .playersScoreHistory[
-              players[playerNumber + 1 < players.length ? playerNumber + 1 : 0]
-                      .playersScoreHistory
-                      .length -
-                  3];
-      players[playerNumber + 1 < players.length ? playerNumber + 1 : 0]
-              .secondHit =
-          players[playerNumber + 1 < players.length ? playerNumber + 1 : 0]
-                  .playersScoreHistory[
-              players[playerNumber + 1 < players.length ? playerNumber + 1 : 0]
-                      .playersScoreHistory
-                      .length -
-                  2];
-      players[playerNumber + 1 < players.length ? playerNumber + 1 : 0]
-              .thirdHit =
-          players[playerNumber + 1 < players.length ? playerNumber + 1 : 0]
-              .playersScoreHistory
-              .last;
+      players[nextPlayer].firstHit = players[nextPlayer].playersScoreHistory[
+          players[nextPlayer].playersScoreHistory.length - 3];
+      players[nextPlayer].secondHit = players[nextPlayer].playersScoreHistory[
+          players[nextPlayer].playersScoreHistory.length - 2];
+      players[nextPlayer].thirdHit =
+          players[nextPlayer].playersScoreHistory.last;
     } else if (lastHitTemp == players[playerNumber].thirdHit) {
       players[playerNumber].thirdHit = -1;
     } else if (lastHitTemp == players[playerNumber].secondHit &&
-        players[playerNumber + 1 < players.length ? playerNumber + 1 : 0]
-                .firstHit ==
-            -1 &&
+        players[nextPlayer].firstHit == -1 &&
         scoreHistory.length > 3 * players.length - 2 &&
         players[playerNumber].testColor == Colors.red) {
       players[playerNumber].secondHit = -1;
-      players[playerNumber + 1 < players.length ? playerNumber + 1 : 0]
-              .firstHit =
-          players[playerNumber + 1 < players.length ? playerNumber + 1 : 0]
-                  .playersScoreHistory[
-              players[playerNumber + 1 < players.length ? playerNumber + 1 : 0]
-                      .playersScoreHistory
-                      .length -
-                  3];
-      players[playerNumber + 1 < players.length ? playerNumber + 1 : 0]
-              .secondHit =
-          players[playerNumber + 1 < players.length ? playerNumber + 1 : 0]
-                  .playersScoreHistory[
-              players[playerNumber + 1 < players.length ? playerNumber + 1 : 0]
-                      .playersScoreHistory
-                      .length -
-                  2];
-      players[playerNumber + 1 < players.length ? playerNumber + 1 : 0]
-              .thirdHit =
-          players[playerNumber + 1 < players.length ? playerNumber + 1 : 0]
-              .playersScoreHistory
-              .last;
+      players[nextPlayer].firstHit = players[nextPlayer].playersScoreHistory[
+          players[nextPlayer].playersScoreHistory.length - 3];
+      players[nextPlayer].secondHit = players[nextPlayer].playersScoreHistory[
+          players[nextPlayer].playersScoreHistory.length - 2];
+      players[nextPlayer].thirdHit =
+          players[nextPlayer].playersScoreHistory.last;
     } else if (lastHitTemp == players[playerNumber].secondHit) {
       players[playerNumber].secondHit = -1;
     } else if (lastHitTemp == players[playerNumber].firstHit &&
-        players[playerNumber + 1 < players.length ? playerNumber + 1 : 0]
-                .firstHit ==
-            -1 &&
+        players[nextPlayer].firstHit == -1 &&
         scoreHistory.length > 3 * players.length - 2 &&
         players[playerNumber].testColor == Colors.red) {
       players[playerNumber].firstHit = -1;
@@ -292,14 +241,6 @@ class GameProvider with ChangeNotifier {
               players[playerNumber].playersScoreHistory.length - 2];
       players[playerNumber].thirdHit =
           players[playerNumber].playersScoreHistory.last;
-      // players[playerNumber - 1].firstHit =
-      //     players[playerNumber - 1].playersScoreHistory[
-      //         players[playerNumber - 1].playersScoreHistory.length - 3];
-      // players[playerNumber - 1].secondHit =
-      //     players[playerNumber - 1].playersScoreHistory[
-      //         players[playerNumber - 1].playersScoreHistory.length - 2];
-      // players[playerNumber - 1].thirdHit =
-      //     players[playerNumber - 1].playersScoreHistory.last;
     } else {
       players[playerNumber].firstHit = -1;
     }
@@ -309,9 +250,9 @@ class GameProvider with ChangeNotifier {
   void renderOldScoreHistory() {
     if (players.last.testColor == Colors.red) {
       return;
-    } else if(scoreHistory.length < 3 * players.length){
+    } else if (scoreHistory.length < 3 * players.length) {
       return;
-    }
+    } else if (players.length != 1){
     for (var i = 0; i < players.length; i++) {
       players[players.length - (i + 1)].thirdHit =
           players[players.length - (i + 1)].playersScoreHistory.last;
@@ -322,6 +263,7 @@ class GameProvider with ChangeNotifier {
           players[players.length - (i + 1)].playersScoreHistory[
               players[players.length - (i + 1)].playersScoreHistory.length - 3];
     }
+    }
   }
 
   void undoScore() {
@@ -329,7 +271,7 @@ class GameProvider with ChangeNotifier {
       return;
     } else {
       testCalculator();
-      int lastHit = players[playerIndexProvider].playersScoreHistory.last;
+      var lastHit = players[playerIndexProvider].playersScoreHistory.last;
       if (players[playerIndexProvider].firstHit == -1 &&
           players[playerIndexProvider].playersScoreHistory.length > 2) {
         players[playerIndexProvider].firstHit =
@@ -377,48 +319,20 @@ class GameProvider with ChangeNotifier {
           players[playerIndexProvider].firstHit != -1 &&
           players[playerIndexProvider].secondHit == -1 &&
           players[playerIndexProvider].thirdHit == -1) {
-        players[playerIndexProvider + 1 < players.length
-                ? playerIndexProvider + 1
-                : 0]
-            .firstHit = players[playerIndexProvider + 1 < players.length
-                ? playerIndexProvider + 1
-                : 0]
-            .playersScoreHistory[players[
-                    playerIndexProvider + 1 < players.length
-                        ? playerIndexProvider + 1
-                        : 0]
-                .playersScoreHistory
-                .length -
-            3];
-        players[playerIndexProvider + 1 < players.length
-                ? playerIndexProvider + 1
-                : 0]
-            .secondHit = players[playerIndexProvider + 1 < players.length
-                ? playerIndexProvider + 1
-                : 0]
-            .playersScoreHistory[players[
-                    playerIndexProvider + 1 < players.length
-                        ? playerIndexProvider + 1
-                        : 0]
-                .playersScoreHistory
-                .length -
-            2];
-        players[playerIndexProvider + 1 < players.length
-                ? playerIndexProvider + 1
-                : 0]
-            .thirdHit = players[playerIndexProvider + 1 < players.length
-                ? playerIndexProvider + 1
-                : 0]
-            .playersScoreHistory
-            .last;
-            players[playerIndexProvider].testColor == Colors.black;
-        print('object');
+        final nextPlayer = playerIndexProvider + 1 < players.length
+            ? playerIndexProvider + 1
+            : 0;
+        players[nextPlayer].firstHit = players[nextPlayer].playersScoreHistory[
+            players[nextPlayer].playersScoreHistory.length - 3];
+        players[nextPlayer].secondHit = players[nextPlayer].playersScoreHistory[
+            players[nextPlayer].playersScoreHistory.length - 2];
+        players[nextPlayer].thirdHit =
+            players[nextPlayer].playersScoreHistory.last;
+        players[playerIndexProvider].testColor = Colors.black;
       }
       if (scoreHistoryNaTrzy == scoreHistoryNaTrzy.ceil() ||
           testNaTrzy > 0.65 && testNaTrzy < 0.67) {
-            print('dziendobry $lastHit');
         undoScoreComponent(playerIndexProvider, lastHit);
-        print(playerIndexProvider);
       } else if (testNaTrzy > 0.32 && testNaTrzy < 0.34) {
         undoScoreComponent(playerIndexProvider, lastHit);
         if (scoreHistory.isNotEmpty && playerIndexProvider != 0) {
@@ -429,9 +343,6 @@ class GameProvider with ChangeNotifier {
         }
       }
       notifyListeners();
-      print(testNaTrzy);
-      print(
-          'index : $playerIndexProvider historia: ${players[playerIndexProvider].playersScoreHistory} undo na trzy$testNaTrzy');
     }
   }
 

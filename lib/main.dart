@@ -16,25 +16,32 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        // ChangeNotifierProvider(
-        //   create: (context) => Players(),
-        // ),
         ChangeNotifierProvider(
           create: (context) => GameProvider(),
         ),
       ],
       child: MaterialApp(
         theme: ThemeData(
+          fontFamily: 'Rounded',
+          iconTheme: const IconThemeData(color: Colors.white),
           textTheme: const TextTheme(
+            titleLarge: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: 32,
+            ),
             titleMedium: TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.bold,
-              fontSize: 20,
+              fontSize: 19,
             ),
           ),
-          primaryColor: Colors.blue,
-          colorScheme:
-              ColorScheme.fromSwatch().copyWith(secondary: Colors.white),
+          colorScheme: ColorScheme.fromSwatch().copyWith(
+            primary: const Color(0xFF2196F3),
+            secondary: const Color(0xFFD62839),
+            onPrimary: Colors.white,
+            outline: Colors.lightBlue,
+          ),
         ),
         title: 'Wyniki',
         home: const SetUpGame(),

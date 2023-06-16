@@ -14,7 +14,7 @@ class AddPlayerAlert extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      backgroundColor: Colors.grey,
+      backgroundColor: Colors.blue.shade800,
       title: Text(
         'Add a new Player!',
         style: Theme.of(context).textTheme.titleMedium,
@@ -22,7 +22,7 @@ class AddPlayerAlert extends StatelessWidget {
       content: TextField(
         controller: addPlayerName,
         decoration: InputDecoration(
-          hintText: "Player's name",
+          hintText: "Player's name...",
           hintStyle: Theme.of(context).textTheme.titleMedium,
         ),
       ),
