@@ -7,51 +7,51 @@ import 'package:provider/provider.dart';
 import 'package:wyniki/Providers/newgame_provider.dart';
 
 class PlayersListContainer extends StatelessWidget {
-  const PlayersListContainer({super.key});
-
-
+  PlayersListContainer(this.listHeight);
+  double listHeight;
   @override
   Widget build(BuildContext context) {
     final gameProvider = Provider.of<GameProvider>(context);
     final playersList = gameProvider.players;
-    return Expanded(
-      child: Column(
-        children: [
-          const SizedBox(
-            height: 24,
-          ),
-          Container(
-            color: Colors.blueGrey,
-            height: 400,
-            child: ListView.builder(
-              itemCount: playersList.length,
-              itemBuilder: (context, index) {
-                return Card(
-                  color:const Color.fromARGB(221, 32, 31, 31),
-                  child: ListTile(
-                    leading: Icon(
-                      Icons.person,
-                      color: Theme.of(context).colorScheme.secondary,
-                    ),
-                    title: Text(
-                      playersList[index].playerName,
-                      style: TextStyle(
-                        color: Theme.of(context).colorScheme.secondary,
-                      ),
-                    ),
-                    trailing: IconButton(
-                      icon: const Icon(Icons.person_off_outlined),
-                      color: Theme.of(context).colorScheme.secondary,
-                      onPressed: () {
-                        gameProvider.deletePlayer(playersList[index]);
-                      },
-                    ),
+    return SizedBox(
+      height: listHeight,
+      child: ListView.builder(
+        itemCount: playersList.length,
+        itemBuilder: (context, index) {
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                border: Border(
+                  bottom: BorderSide(
+                    color: Theme.of(context).colorScheme.outline,
                   ),
-                );
-              },
+                ),
+              ),
+              child: Card(
+                shadowColor: Colors.transparent,
+                color: Colors.transparent,
+                child: ListTile(
+                  leading: Icon(
+                    Icons.person,
+                    color: Theme.of(context).iconTheme.color,
+                  ),
+                  title: Text(
+                    playersList[index].playerName,
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                  trailing: IconButton(
+                    icon: const Icon(Icons.person_off_outlined),
+                    color: Theme.of(context).iconTheme.color,
+                    onPressed: () {
+                      gameProvider.deletePlayer(playersList[index]);
+                    },
+                  ),
+                ),
+              ),
             ),
-          ),
-        ],
+          );
+        },
       ),
     );
   }
