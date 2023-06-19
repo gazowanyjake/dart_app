@@ -15,14 +15,14 @@ class WinnerAlert extends StatelessWidget {
   Widget build(BuildContext context) {
     final gameProvider = Provider.of<GameProvider>(context, listen: false);
     return AlertDialog(
-      backgroundColor: Colors.grey,
+      backgroundColor: Colors.blue.shade800,
       title: Text(
         'We have a Winner!!!',
-        style: TextStyle(color: Theme.of(context).colorScheme.secondary),
+        style: Theme.of(context).textTheme.titleLarge,
       ),
       content: Text(
         'Congrats $playerName',
-        style: TextStyle(color: Theme.of(context).colorScheme.secondary),
+        style: Theme.of(context).textTheme.titleMedium,
       ),
       actions: [
         Consumer<GameProvider>(
