@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 
-import 'package:wyniki/Providers/game.dart';
+import 'package:wyniki/Providers/newgame_provider.dart';
 import 'package:wyniki/Screens/set_up_game_screen.dart';
 
 class WinnerAlert extends StatelessWidget {
@@ -13,28 +13,25 @@ class WinnerAlert extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final gameProvider = Provider.of<Game>(context, listen: false);
+    final gameProvider = Provider.of<GameProvider>(context, listen: false);
     return AlertDialog(
-      backgroundColor: Colors.grey,
+      backgroundColor: Colors.blue.shade800,
       title: Text(
         'We have a Winner!!!',
-        style: TextStyle(color: Theme.of(context).colorScheme.secondary),
+        style: Theme.of(context).textTheme.titleLarge,
       ),
       content: Text(
         'Congrats $playerName',
-        style: TextStyle(color: Theme.of(context).colorScheme.secondary),
+        style: Theme.of(context).textTheme.titleMedium,
       ),
       actions: [
-        Consumer<Game>(
+        Consumer<GameProvider>(
           builder: (context, players, child) => TextButton(
             onPressed: () {
               Navigator.of(context).pop();
               gameProvider
                 ..winner = false
-                ..scoreHistory = []
-                ..player0 = []
-                ..player1 = []
-                ..currentPlayerIndex = 0;
+                ..scoreHistory = [];
               Navigator.of(context).pushReplacementNamed(SetUpGame.routeName);
             },
             child: const Text(

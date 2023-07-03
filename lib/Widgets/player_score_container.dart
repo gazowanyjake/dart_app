@@ -4,28 +4,29 @@ import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 
-import 'package:wyniki/Providers/game.dart';
+import 'package:wyniki/Models/newplayer_model.dart';
+import 'package:wyniki/Providers/newgame_provider.dart';
 import 'package:wyniki/widgets/dart_hit_score_container.dart';
 
 class PlayerScoreContainer extends StatelessWidget {
-  const PlayerScoreContainer(
-    this.playersName,
-    this.playersScore,
-    this.playerIndex, {
+  PlayerScoreContainer({
+    required this.player,
+    required this.playerIndex,
     super.key,
   });
-  final String playersName;
-  final int playersScore;
-  final int playerIndex;
+
+  Player player;
+  int playerIndex;
+
   @override
   Widget build(BuildContext context) {
-    final gameProvider = Provider.of<Game>(context);
+    final gameProvider = Provider.of<GameProvider>(context);
     final playerIndicator = gameProvider.currentPlayerIndicator(playerIndex);
     return Container(
       margin: const EdgeInsets.only(left: 8, right: 8, top: 8),
       height: 96,
       decoration: BoxDecoration(
-        color: Colors.grey,
+        color: Color(0xFF1E88DD),
         border: Border(
           left: BorderSide(color: playerIndicator, width: 16),
         ),
@@ -41,15 +42,19 @@ class PlayerScoreContainer extends StatelessWidget {
                   height: 4,
                 ),
                 Text(
-                  '$playersScore',
-                  style: const TextStyle(
+                  '${player.initScore}',
+                  style: TextStyle(
                     fontSize: 40,
                     fontWeight: FontWeight.bold,
+                    color: Theme.of(context).textTheme.titleMedium?.color,
                   ),
                 ),
                 Text(
-                  playersName,
-                  style: const TextStyle(fontSize: 20),
+                  player.playerName,
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Theme.of(context).textTheme.titleMedium?.color,
+                  ),
                 ),
               ],
             ),
@@ -62,41 +67,63 @@ class PlayerScoreContainer extends StatelessWidget {
               Row(
                 children: [
                   DartHitScoreContainer(
-                    gameProvider.returnHitScore1(playerIndex),
+                    player.firstHit,
+                    player.testColor,
                   ),
                   const SizedBox(
                     width: 4,
                   ),
                   DartHitScoreContainer(
-                    gameProvider.returnHitScore2(playerIndex),
+                    player.secondHit,
+                    player.testColor,
                   ),
                   const SizedBox(
                     width: 4,
                   ),
                   DartHitScoreContainer(
-                    gameProvider.returnHitScore3(playerIndex),
+                    player.thirdHit,
+                    player.testColor,
                   ),
                 ],
               ),
               const SizedBox(
                 height: 12,
               ),
-              const Text('score that round'),
+              Text(
+                'score that round',
+                style: TextStyle(
+                    color: Theme.of(context).textTheme.titleMedium?.color),
+              ),
             ],
           ),
           Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               Row(
-                children: const [
-                  Text('sets:0'),
-                  SizedBox(
+                children: [
+                  Text(
+                    'sets:0',
+                    style: TextStyle(
+                      color: Theme.of(context).textTheme.titleMedium?.color,
+                    ),
+                  ),
+                  const SizedBox(
                     width: 4,
                   ),
-                  Text('legs:0'),
+                  Text(
+                    'legs:0',
+                    style: TextStyle(
+                      color: Theme.of(context).textTheme.titleMedium?.color,
+                    ),
+                  ),
                 ],
               ),
-              const Text('darts thrown'),
+              Text(
+                'darts thrown',
+                style: TextStyle(
+                  color: Theme.of(context).textTheme.titleMedium?.color,
+                ),
+              ),
             ],
           )
         ],

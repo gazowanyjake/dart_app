@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 
-import 'package:wyniki/Providers/game.dart';
+import 'package:wyniki/Providers/newgame_provider.dart';
 import 'package:wyniki/Screens/game_screen.dart';
 
 class StartButton extends StatelessWidget {
@@ -12,24 +12,50 @@ class StartButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final gameProvider = Provider.of<Game>(context, listen: false);
+    final gameProvider = Provider.of<GameProvider>(context, listen: false);
     return GestureDetector(
       child: Container(
         alignment: Alignment.center,
-        margin: const EdgeInsets.all(4),
+        margin: const EdgeInsets.only(bottom: 24),
         height: 48,
         width: 248,
-        decoration: const BoxDecoration(color: Colors.red),
+        decoration: BoxDecoration(
+          border: Border.all(color: Theme.of(context).colorScheme.primary),
+          borderRadius: const BorderRadius.all(
+            Radius.circular(30),
+          ),
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              Theme.of(context).colorScheme.primary,
+              Theme.of(context).colorScheme.secondary,
+            ],
+          ),
+        ),
         child: Text(
           'Start',
-          style: Theme.of(context).textTheme.titleMedium,
+          style: Theme.of(context).textTheme.titleLarge,
         ),
       ),
-      onTap: () async {
-        gameProvider..playerIndexCreator()
-        ..setPlayersInitialScores()
-        ..liveBoxMapGenerate();
-        await Navigator.of(context).pushNamed(GameScreen.routeName);
+      onTap: () {
+        if (gameProvider.players.isEmpty) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(
+                'Add players',
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+              behavior: SnackBarBehavior.floating,
+              duration: const Duration(seconds: 2),
+              backgroundColor: Theme.of(context).colorScheme.secondary,
+            ),
+          );
+          return;
+        }
+        gameProvider.scoreSetterStartButton();
+        Navigator.of(context).pushNamed(GameScreen.routeName);
       },
     );
   }

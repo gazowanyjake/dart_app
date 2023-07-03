@@ -13,14 +13,14 @@ class GameSettings extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         MyDropDownButton(
-          title: 'Punkty',
+          title: 'Points',
           list: pointsList,
         ),
         MyDropDownButton(
           title: 'Check-Out',
           list: checkOutList,
-          width: 148,
-          color: Colors.red,
+          width: 142,
+          color: Theme.of(context).colorScheme.secondary,
         ),
         MyDropDownButton(
           title: 'Sets',
